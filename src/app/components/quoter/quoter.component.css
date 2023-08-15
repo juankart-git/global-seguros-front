@@ -1,0 +1,118 @@
+
+.cmp-accordion {
+    padding: 32px 0;
+}
+
+.cmp-accordion__tittle{
+    margin-bottom: 64px;
+}
+
+.cmp-accordion__number{
+    color: #004C92;
+    font-family: VAGRoundedStd;
+}
+
+.cmp-accordion__button{
+    font-style: normal; 
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-transform: uppercase;
+    color: #00315f;
+}
+
+.cmp-accordion__number.collapsed{
+    color: #cccccc;
+}
+
+.cmp-accordion__button.collapsed{
+    color: #cccccc;
+}
+.cmp-accordion__button:not(.collapsed){
+    color: #000000;
+}
+
+.accordion-item{
+    border: none;
+}
+
+.accordion-button{
+    border-bottom: 1px solid #e1e1e1;
+    gap: 16px;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: #ffffff;
+    box-shadow: none;
+}
+
+.accordion-button:focus{
+    background-color: #ffffff;
+    box-shadow: none;
+}
+
+
+.accordion-container {
+    padding: 15px;    
+    background-color: #ffffff;
+    height: 100%;
+    border-radius: 0 0 1rem 1rem;
+}
+
+.accordion-body {  
+    background-color: #fff
+}
+
+.form-select{
+    border-radius:1.3rem;
+}
+
+.form-control {
+    border-radius:1.3rem;
+}
+
+.title-h1{
+    font-family: 'Poppins';
+    font-style: normal; 
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 150%;
+}
+
+.principal-title{
+    background-color: #ffd300;
+    padding: 3px;
+    padding-left: 50px;
+    color: #003696;
+    font-weight: bold;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.btn-yo{
+    padding: 7px 12px;
+    color: #f4f4f4;
+    background-color:#0e5ea8 ;
+    width: 100%;
+}
+
+.btn-yo:hover{
+    color: #f4f4f4;
+    background-color: #a8a50e;
+}
+
+
+.btn-yo-eliminar{
+    padding: 7px 12px;
+    color: #f4f4f4;
+    background-color:#a80e0e8c ;
+}
+
+.btn-yo-eliminar:hover{
+    color: #f4f4f4;
+    background-color: #a8a50e80;
+}
+
+.accordion-header-yellow{
+    background-color: #003696;
+    height: 10px;
+}

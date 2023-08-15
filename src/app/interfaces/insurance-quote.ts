@@ -1,0 +1,33 @@
+export interface InsuranceQuote {
+    id?: number;
+    principal_document_type: number;
+    principal_document_number:string;
+    principal_name: string;
+    principal_first_last_name: string;
+    principal_second_last_name: string;
+    principal_birthdate: string;
+    principal_age: number;
+    principal_gender: string;
+    principal_mail: string;
+    principal_phone: number;
+    principal_state: number;
+    principal_city: number;
+    beneficiary_name: string;
+    beneficiary_first_last_name: string;
+    beneficiary_second_last_name: string;
+    beneficiary_document_type: number;
+    beneficiary_document_number:string;
+    beneficiary_birthdate:string;
+    beneficiary_age:number;
+    beneficiary_state: number;
+    beneficiary_gender: string;
+    beneficiary_city: number;
+    beneficiary_school: string;
+    beneficiary_grade: number;
+    year_university_calculated:number;
+    beneficiary_start_university: number;
+    global_product: number;
+    global_rate: number;
+    state: boolean;
+    observations: string;
+}

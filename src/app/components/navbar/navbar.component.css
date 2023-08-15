@@ -1,0 +1,17 @@
+.navg a{
+    color: #f4f4f4!important;
+    font-family: Montserrat;
+    font-size: 23px;
+    padding: 10px 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.navg a:hover{
+    background-color: #0e5ea880;
+}
+
+.container-fluid{
+    background-color: rgba(7, 7, 7, 0.432)!important;
+}
+  

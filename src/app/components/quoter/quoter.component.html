@@ -1,0 +1,733 @@
+<br><br>
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+
+<div *ngIf="!loading" class="container" style="font-family: VAGRoundedStd;">
+    <div class="container-fluid principal-title" style="text-align: left;">
+        <h3 class="mt-4"><b> Cotizador en linea</b></h3>
+        <h6> <b> Seguro educativo</b></h6>
+    </div>
+    <div class="container-fluid accordion-header-yellow">
+
+    </div>
+
+    <div class="accordion-container">
+        <div class="accordion mt-4" id="accordionExample">
+            <form [formGroup]="form" (ngSubmit)="addProduct()" class="form-accordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne" >
+                        <button class="accordion-button cmp-accordion__button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="cmp-accordion__number title-h1">01</span> Datos personales del solicitante
+                        </button>
+                    </h2>                    
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="" class="form-label mt-4">
+                                            <i class="bi bi-postcard"></i>
+                                            <select class="form-select" id="exampleSelect1" formControlName="principal_document_type"
+                                            placeholder="Tipo de documento">
+                                                <option value="0">Tipo documento</option>
+                                                <option *ngFor="let item of listDocumentTypes" value="{{ item.id }}">{{ item.name }}</option>
+                                            </select> 
+                                        </label>
+                                        
+                                        
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Número de documento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="principal_document_number" type="text" class="form-control"
+                                            placeholder="Ingrese numero de documento">
+                                        <span
+                                            *ngIf="form.get('principal_document_number')?.hasError('required') && form.get('principal_document_number')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Número de documento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">&nbsp; </label><br>
+                                        <button type="button" class="btn btn-yo"
+                                        (click)="createPdf()">Buscar cotizaciones</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Nombres <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="principal_name" type="text" class="form-control"
+                                            placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('principal_name')?.hasError('required') && form.get('principal_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Nombre</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Primer Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="principal_first_last_name" type="text" class="form-control"
+                                            placeholder="Ingrese el primer apellido">
+                                        <span
+                                            *ngIf="form.get('principal_first_last_name')?.hasError('required') && form.get('principal_first_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Primer Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Segundo Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="principal_second_last_name" type="text" class="form-control"
+                                            placeholder="Ingrese el primer apellido">
+                                        <span
+                                            *ngIf="form.get('principal_second_last_name')?.hasError('required') && form.get('principal_second_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Segundo Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Fecha de nacimiento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="principal_birthdate" type="date" class="form-control" id="birthdate"
+                                            [max]="now" placeholder="Ingrese fecha de nacimiento"
+                                            (change)="ageCalculator()">
+                                        <span
+                                            *ngIf="form.get('principal_birthdate')?.hasError('required') && form.get('principal_birthdate')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Fecha de  nacimiento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Edad</label>
+                                        <input type="number" formControlName="principal_age" class="form-control disabled"
+                                            value="{{ showAge }}" id="inputValid">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Sexo <span
+                                                class="text-warning">*</span></label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="principal_gender" id="male"
+                                                value="male" formControlName="principal_gender">
+                                            <label class="form-check-label" for="male">
+                                                <small>Masculino</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="principal_gender" id="female"
+                                                value="female" formControlName="principal_gender">
+                                            <label class="form-check-label" for="female">
+                                                <small>Femenino</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Correo Electronico <span class="text-warning">*</span></label>
+                                        <input formControlName="principal_mail" type="email" class="form-control"
+                                            placeholder="Ingrese un correo valido">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Celular <span class="text-warning">*</span></label>
+                                        <input formControlName="principal_phone" type="number" class="form-control"
+                                            placeholder="Ingrese un número de telefono">
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="exampleSelect1" class="form-label mt-4">Departamento <span
+                                            class="text-warning">*</span></label>
+                                        <select class="form-select" formControlName="principal_state" id="principal_state"
+                                            (change)="getCities($event)">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listStates" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="exampleSelect1" class="form-label mt-4">Municipio <span
+                                            class="text-warning">*</span></label>
+                                        <select class="form-select" id="principal_city" formControlName="principal_city">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listCities" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid mt-5 text-warning">
+                                <p><small> Los campos con <strong>*</strong> son de caracter obligatorio</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button cmp-accordion__button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span class="cmp-accordion__number title-h1">02</span>Datos beneficiario del seguro educativo
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Nombre <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_name" type="text" class="form-control"
+                                            placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_name')?.hasError('required') && form.get('beneficiary_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Nombre</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Primer Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_first_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_first_last_name')?.hasError('required') && form.get('beneficiary_first_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Primer Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Segundo Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_second_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_second_last_name')?.hasError('required') && form.get('beneficiary_second_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Segundo Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label for="exampleSelect2" class="form-label mt-4">Tipo de documento</label>
+                                        <select class="form-select" id="beneficiary_document_type" formControlName="beneficiary_document_type">
+                                            <option value="0">Seleccione...</option>
+                                            <option *ngFor="let item of listDocumentTypes" value="{{ item.id }}">{{
+                                                item.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Número de documento </label>
+                                        <input formControlName="beneficiary_document_number" type="text"
+                                            class="form-control" placeholder="Ingrese numero de documento">                                        
+                                    </div>
+    
+                                    <div class="col-4">
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Fecha de nacimiento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_birthdate" type="date" class="form-control"
+                                            id="beneficiary_birthdate" [max]="now" placeholder="Ingrese fecha de nacimiento"
+                                            (change)="ageCalculatorBeneficiary()">
+                                        <span
+                                            *ngIf="form.get('beneficiary_birthdate')?.hasError('required') && form.get('beneficiary_birthdate')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Fecha de nacimiento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Edad</label>
+                                        <input type="number" formControlName="beneficiary_age" class="form-control disabled"
+                                            value="{{ showAgeBeneficiary }}" id="inputValid">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Sexo <span class="text-warning">*</span></label>
+    
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="male"
+                                                value="male" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="male">
+                                                <small>Masculino</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="female"
+                                                value="female" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="female">
+                                                <small>Femenino</small>
+                                            </label>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 mt-4">
+                                        <h6 class="text-primary">Datos sobre el colegio</h6>
+                                        <p><small>( Si el beneficiario estudia en colegio, diligencie esta  información )</small></p>
+                                    </div>
+
+                                    <!--
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Departamento </label>
+                                        <select class="form-select" formControlName="beneficiary_state" id="beneficiary_state"
+                                            (change)="getCitiesBeneficiary($event)" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listStates" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Municipio </label>
+                                        <select class="form-select" id="beneficiary_city" formControlName="beneficiary_city" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listCitiesBeneficiary" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>  
+                                    <div class="col-6" *ngIf="!isDisabled">
+                                        <label class="form-label mt-4" for="inputValid">Institución educativa</label>
+                                        <div class="input-group mb-3">
+                                            <input  type="text" class="form-control" formControlName="beneficiary_school"
+                                                placeholder="Ingrese el nombre de la institución educativa"  [disabled]="isDisabled"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button [disabled]="isDisabled" class="btn btn-light" type="button"
+                                                id="button-addon2">Buscar</button>
+                                        </div>
+                                    </div>--> 
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Curso</label>
+                                        <select class="form-select" formControlName="beneficiary_grade" id="beneficiary_grade" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Transicion</option>
+                                            <option value="1">Primero</option>
+                                            <option value="2">Segundo</option>
+                                            <option value="3">Tercero</option>
+                                            <option value="4">Cuarto</option>
+                                            <option value="5">Quinto</option>
+                                            <option value="6">Sexto</option>
+                                            <option value="7">Septimo</option>
+                                            <option value="8">Octavo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Calendario</label>
+                                        <select class="form-select" formControlName="beneficiary_calendary" id="beneficiary_calendary" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Calendario A - 11 Grados</option>
+                                            <option value="1">Calendario B - 11 Grados</option>
+                                            <option value="2">Calendario B - 12 Grados</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Año de ingreso a la universidad</label>
+                                        <input type="number" formControlName="year_university_calculated" class="form-control disabled"
+                                            value="{{ year_university }}" id="inputValid">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row mt-3 text-center" style="width: 70%;">
+                                <div class="col-6" *ngIf="!second_beneficiary">
+                                    <button type="button" class="btn btn-yo" 
+                                        (click)="addBeneficiary()">Agregar beneficiario</button>
+                                </div>                                
+                                <div class="col-3" *ngIf="!second_beneficiary">
+                                    <button type="button" class="btn btn-yo"
+                                        (click)="createPdf()">Cotizar</button>
+                                </div>
+                                <div class="col-3" *ngIf="!second_beneficiary">
+                                    <button type="button" class="btn btn-yo"
+                                        (click)="addProduct()">Guardar</button>
+                                </div>                                
+                            </div>
+                            <div class="container-fluid mt-4 text-warning">
+                                <p><small> Los campos con <strong>*</strong> son de caracter obligatorio</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                
+                <div class="accordion-item" *ngIf="second_beneficiary">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button cmp-accordion__button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span class="cmp-accordion__number title-h1">03</span>Datos beneficiario del seguro educativo
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Nombre <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_name" type="text" class="form-control"
+                                            placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_name')?.hasError('required') && form.get('beneficiary_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Nombre</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Primer Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_first_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_first_last_name')?.hasError('required') && form.get('beneficiary_first_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Primer Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Segundo Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_second_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_second_last_name')?.hasError('required') && form.get('beneficiary_second_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Segundo Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label for="exampleSelect2" class="form-label mt-4">Tipo de documento <span
+                                                class="text-warning">*</span></label>
+                                        <select class="form-select" id="beneficiary_document_type" formControlName="beneficiary_document_type">
+                                            <option value="0">Seleccione...</option>
+                                            <option *ngFor="let item of listDocumentTypes" value="{{ item.id }}">{{
+                                                item.name}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Número de documento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_document_number" type="text"
+                                            class="form-control" placeholder="Ingrese numero de documento">
+                                        <span
+                                            *ngIf="form.get('beneficiary_document_number')?.hasError('required') && form.get('beneficiary_document_number')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Número de documento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Fecha de nacimiento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_birthdate" type="date" class="form-control"
+                                            id="beneficiary_birthdate" [max]="now" placeholder="Ingrese fecha de nacimiento"
+                                            (change)="ageCalculatorBeneficiary()">
+                                        <span
+                                            *ngIf="form.get('beneficiary_birthdate')?.hasError('required') && form.get('beneficiary_birthdate')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Fecha de nacimiento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Edad</label>
+                                        <input type="number" formControlName="beneficiary_age" class="form-control disabled"
+                                            value="{{ showAgeBeneficiary }}" id="inputValid">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Sexo <span
+                                            class="text-warning">*</span></label>
+    
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="male"
+                                                value="male" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="male">
+                                                <small>Masculino</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="female"
+                                                value="female" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="female">
+                                                <small>Femenino</small>
+                                            </label>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 mt-4">
+                                        <h6 class="text-primary">Datos sobre el colegio</h6>
+                                        <p><small>( Si el beneficiario estudia en colegio, diligencie esta  información )</small></p>
+                                    </div>
+    
+                                    <!--
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Departamento </label>
+                                        <select class="form-select" formControlName="beneficiary_state" id="beneficiary_state"
+                                            (change)="getCitiesBeneficiary($event)" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listStates" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Municipio </label>
+                                        <select class="form-select" id="beneficiary_city" formControlName="beneficiary_city" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listCitiesBeneficiary" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>  
+                                    <div class="col-6" *ngIf="!isDisabled">
+                                        <label class="form-label mt-4" for="inputValid">Institución educativa</label>
+                                        <div class="input-group mb-3">
+                                            <input  type="text" class="form-control" formControlName="beneficiary_school"
+                                                placeholder="Ingrese el nombre de la institución educativa"  [disabled]="isDisabled"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button [disabled]="isDisabled" class="btn btn-light" type="button"
+                                                id="button-addon2">Buscar</button>
+                                        </div>
+                                    </div>--> 
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Curso</label>
+                                        <select class="form-select" formControlName="beneficiary_grade" id="beneficiary_grade" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Transicion</option>
+                                            <option value="1">Primero</option>
+                                            <option value="2">Segundo</option>
+                                            <option value="3">Tercero</option>
+                                            <option value="4">Cuarto</option>
+                                            <option value="5">Quinto</option>
+                                            <option value="6">Sexto</option>
+                                            <option value="7">Septimo</option>
+                                            <option value="8">Octavo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Calendario</label>
+                                        <select class="form-select" formControlName="beneficiary_calendary" id="beneficiary_calendary" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Calendario A - 11 Grados</option>
+                                            <option value="1">Calendario B - 11 Grados</option>
+                                            <option value="2">Calendario B - 12 Grados</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Año de ingreso a la universidad</label>
+                                        <input type="number" formControlName="year_university_calculated" class="form-control disabled"
+                                            value="{{ year_university }}" id="inputValid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4 text-center" style="width: 90%;">
+                                    <div class="col-3" *ngIf="!third_beneficiary">
+                                        <button type="button" class="btn btn-yo" 
+                                            (click)="addBeneficiary2()">Agregar beneficiario</button>
+                                    </div>
+
+                                    <div class="col-3" *ngIf="second_beneficiary">
+                                        <button type="button" class="btn btn-yo-eliminar"
+                                            (click)="delBeneficiary()">Eliminar beneficiario</button>
+                                    </div>
+                                    
+                                    <div class="col-3" *ngIf="!third_beneficiary">
+                                        <button type="button" class="btn btn-yo"
+                                            (click)="createPdf()">Cotizar</button>
+                                    </div>
+
+                                    <div class="col-3" *ngIf="!third_beneficiary">
+                                        <button type="button" class="btn btn-yo"
+                                            (click)="addProduct()">Guardar</button>
+                                    </div>                              
+                            </div>
+                            <div class="container-fluid mt-4 text-warning">
+                                <p><small> Los campos con <strong>*</strong> son de caracter obligatorio</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item" *ngIf="third_beneficiary">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button cmp-accordion__button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <span class="cmp-accordion__number title-h1">04</span>Datos beneficiario del seguro educativo
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Nombre <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_name" type="text" class="form-control"
+                                            placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_name')?.hasError('required') && form.get('beneficiary_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Nombre</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Primer Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_first_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_first_last_name')?.hasError('required') && form.get('beneficiary_first_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Primer Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Segundo Apellido <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_second_last_name" type="text"
+                                            class="form-control" placeholder="Ingrese el nombre">
+                                        <span
+                                            *ngIf="form.get('beneficiary_second_last_name')?.hasError('required') && form.get('beneficiary_second_last_name')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Segundo Apellido</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label for="exampleSelect2" class="form-label mt-4">Tipo de documento <span
+                                                class="text-warning">*</span></label>
+                                        <select class="form-select" id="beneficiary_document_type" formControlName="beneficiary_document_type">
+                                            <option value="0">Seleccione...</option>
+                                            <option *ngFor="let item of listDocumentTypes" value="{{ item.id }}">{{
+                                                item.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Número de documento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_document_number" type="text"
+                                            class="form-control" placeholder="Ingrese numero de documento">
+                                        <span
+                                            *ngIf="form.get('beneficiary_document_number')?.hasError('required') && form.get('beneficiary_document_number')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Número de documento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+    
+                                    <div class="col-4">
+                                    </div>
+    
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Fecha de nacimiento <span
+                                                class="text-warning">*</span></label>
+                                        <input formControlName="beneficiary_birthdate" type="date" class="form-control"
+                                            id="beneficiary_birthdate" [max]="now" placeholder="Ingrese fecha de nacimiento"
+                                            (change)="ageCalculatorBeneficiary()">
+                                        <span
+                                            *ngIf="form.get('beneficiary_birthdate')?.hasError('required') && form.get('beneficiary_birthdate')?.touched">
+                                            <div class="text-danger mt-1"><small>El campo <strong>Fecha de nacimiento</strong> es requerido</small></div>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Edad</label>
+                                        <input type="number" formControlName="beneficiary_age" class="form-control disabled"
+                                            value="{{ showAgeBeneficiary }}" id="inputValid">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Sexo <span
+                                            class="text-warning">*</span></label>
+    
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="male"
+                                                value="male" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="male">
+                                                <small>Masculino</small>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="beneficiary_gender" id="female"
+                                                value="female" formControlName="beneficiary_gender">
+                                            <label class="form-check-label" for="female">
+                                                <small>Femenino</small>
+                                            </label>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-12 mt-4">
+                                        <h6 class="text-primary">Datos sobre el colegio</h6>
+                                        <p><small>( Si el beneficiario estudia en colegio, diligencie esta  información )</small></p>
+                                    </div>
+    
+                                    <!--
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Departamento </label>
+                                        <select class="form-select" formControlName="beneficiary_state" id="beneficiary_state"
+                                            (change)="getCitiesBeneficiary($event)" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listStates" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Municipio </label>
+                                        <select class="form-select" id="beneficiary_city" formControlName="beneficiary_city" [disabled]="isDisabled">
+                                            <option value="0" selected="true">Seleccione...</option>
+                                            <option *ngFor="let item of listCitiesBeneficiary" value="{{ item.id }}">{{ item.name }}
+                                            </option>
+                                        </select>
+                                    </div>  
+                                    <div class="col-6" *ngIf="!isDisabled">
+                                        <label class="form-label mt-4" for="inputValid">Institución educativa</label>
+                                        <div class="input-group mb-3">
+                                            <input  type="text" class="form-control" formControlName="beneficiary_school"
+                                                placeholder="Ingrese el nombre de la institución educativa"  [disabled]="isDisabled"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <button [disabled]="isDisabled" class="btn btn-light" type="button"
+                                                id="button-addon2">Buscar</button>
+                                        </div>
+                                    </div>--> 
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Curso</label>
+                                        <select class="form-select" formControlName="beneficiary_grade" id="beneficiary_grade" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Transicion</option>
+                                            <option value="1">Primero</option>
+                                            <option value="2">Segundo</option>
+                                            <option value="3">Tercero</option>
+                                            <option value="4">Cuarto</option>
+                                            <option value="5">Quinto</option>
+                                            <option value="6">Sexto</option>
+                                            <option value="7">Septimo</option>
+                                            <option value="8">Octavo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4" *ngIf="!isDisabled">
+                                        <label for="exampleSelect1" class="form-label mt-4">Calendario</label>
+                                        <select class="form-select" formControlName="beneficiary_calendary" id="beneficiary_calendary" >
+                                            <option value="-1">Seleccione...</option>
+                                            <option value="0">Calendario A - 11 Grados</option>
+                                            <option value="1">Calendario B - 11 Grados</option>
+                                            <option value="2">Calendario B - 12 Grados</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mt-4" for="inputValid">Año de ingreso a la universidad</label>
+                                        <input type="number" formControlName="year_university_calculated" class="form-control disabled"
+                                            value="{{ year_university }}" id="inputValid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 text-center" style="width: 70%;">   
+                                <div class="col-6" *ngIf="third_beneficiary">
+                                    <button type="button" class="btn btn-yo-eliminar"
+                                        (click)="delBeneficiary2()">Eliminar beneficiario</button>
+                                </div>                               
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-yo"
+                                        (click)="createPdf()">Cotizar</button>
+                                </div>
+                                <div class="col-3" >
+                                    <button type="button" class="btn btn-yo"
+                                        (click)="addProduct()">Guardar</button>
+                                </div>                                
+                            </div>
+                            <div class="container-fluid mt-4 text-warning">
+                                <p><small> Los campos con <strong>*</strong> son de caracter obligatorio</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+</div>
