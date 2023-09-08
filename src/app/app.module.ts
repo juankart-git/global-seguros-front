@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +15,9 @@ import { ProgressBarComponent } from './shared/progress-bar/progress-bar.compone
 import { QuoterComponent } from './components/quoter/quoter.component';
 import { PdfComponent } from './components/pdf/pdf.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/es-CO';
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { FooterComponent } from './components/footer/footer.component';
       preventDuplicates: true
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es-CO'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

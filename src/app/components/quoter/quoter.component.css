@@ -18,57 +18,78 @@
     font-size: 16px;
     line-height: 150%;
     text-transform: uppercase;
-    color: #00315f;
+    color: #00328C;
+    font-family: VAGRoundedStd-Bold ;
 }
 
-.cmp-accordion__number.collapsed{
-    color: #cccccc;
+
+.cmp-accordion__number:not(.collapsed){
+    color: #00328C;
 }
 
 .cmp-accordion__button.collapsed{
-    color: #cccccc;
-}
-.cmp-accordion__button:not(.collapsed){
-    color: #000000;
-}
-
-.accordion-item{
-    border: none;
+    color: #ffffff;
+    background-color: #ffffffb4;
 }
 
 .accordion-button{
-    border-bottom: 1px solid #e1e1e1;
+    background-color: #ffffff00;
+}
+.accordion-button:not(.collapsed){
+    background-color: #ffffffa2!important;
+    color: #00328C!important;
+    font-weight: bold;
+}
+
+.accordion-button.collapsed{
+    background-color: #ffffff00!important;
+    color: #00328C!important;
+    font-weight: bold;
+}
+
+
+.accordion-item{
+    border: none;
+    background-color: #ffffff00;
+    color: #00315f;
+    font-weight: bold;
+}
+
+.accordion-header{
+    background-color: #ffffff00;
+    border-radius: 0 2rem 0 0 ;
+}
+
+.accordion-button{
+    border-bottom: 1px solid #00328C;
     gap: 16px;
+    border-radius: 0 2rem 0 0 ;
 }
 
 .accordion-button:not(.collapsed){
-    background-color: #ffffff;
     box-shadow: none;
+    border-radius: 0 2rem 0 0 ;
 }
 
 .accordion-button:focus{
-    background-color: #ffffff;
     box-shadow: none;
+    border-radius: 0 2rem 0 0 ;
 }
 
 
 .accordion-container {
     padding: 15px;    
-    background-color: #ffffff;
+    background-color:#ffffff79;
     height: 100%;
     border-radius: 0 0 1rem 1rem;
 }
 
-.accordion-body {  
-    background-color: #fff
-}
-
 .form-select{
-    border-radius:1.3rem;
+    border-radius:1.0rem;
 }
 
 .form-control {
-    border-radius:1.3rem;
+    border-radius:1.0rem;
 }
 
 .title-h1{
@@ -80,19 +101,25 @@
 }
 
 .principal-title{
-    background-color: #ffd300;
+    background-color: #00328C;
     padding: 3px;
     padding-left: 50px;
-    color: #003696;
+    color: #ffffff;
     font-weight: bold;
     border-radius: 1rem 1rem 0 0;
+   
 }
 
 .btn-yo{
     padding: 7px 12px;
     color: #f4f4f4;
-    background-color:#0e5ea8 ;
     width: 100%;
+    border-radius:1.0rem;
+    border: none;
+    background:  #4274a3;
+    background: -webkit-linear-gradient(to right , #356da1, #00328C);
+    background: linear-gradient(to right , #356da1, #00328C);
+    
 }
 
 .btn-yo:hover{
@@ -104,7 +131,12 @@
 .btn-yo-eliminar{
     padding: 7px 12px;
     color: #f4f4f4;
-    background-color:#a80e0e8c ;
+    width: 100%;
+    border-radius:1.0rem;
+    border: none;
+    background:  #4274a3;
+    background: -webkit-linear-gradient(to right , #a74b4b, #aa0707);
+    background: linear-gradient(to right , #a74b4b, #aa0707);
 }
 
 .btn-yo-eliminar:hover{
@@ -113,6 +145,51 @@
 }
 
 .accordion-header-yellow{
-    background-color: #003696;
+    background-color: #ffd300;
     height: 10px;
 }
+
+
+input::placeholder {
+    font-size: 11px;
+    opacity: 0.4;
+  }
+
+  select:required:invalid {
+    color: #666;
+  }
+  
+  .select-placeholder {
+    font-size: 9px!important;
+    opacity: 0.4!important;
+  }  
+
+.header{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(./../../../assets/images/background2.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover ;
+    background-attachment: fixed;
+    overflow-y: visible;
+    }
+    
+    .header:before{
+    content: '';
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(rgba(255,255,255,.1), rgba(34,40,49,1));
+    }
+
+    .bg-dark{
+        position: relative;
+        z-index: 20;
+        width: 100%;    
+        background-color: transparent!important;
+        
+        }
+    

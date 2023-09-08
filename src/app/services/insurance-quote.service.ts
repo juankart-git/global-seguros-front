@@ -19,6 +19,10 @@ export class InsuranceQuoteService {
     return this.http.get<InsuranceQuote[]>(this.myAppUrl + this.myApiUrl);
   }
 
+  getListInsuranceQuotesByDocument(document: string): Observable<InsuranceQuote> {
+    return this.http.get<InsuranceQuote>(this.myAppUrl + this.myApiUrl + 'document/' + document);
+  }
+
   getListActiveInsuranceQuotes(): Observable<InsuranceQuote[]> {
     return this.http.get<InsuranceQuote[]>(this.myAppUrl + this.myApiUrl + 'active');
   }
@@ -31,8 +35,8 @@ export class InsuranceQuoteService {
     return this.http.delete<void>(this.myAppUrl + this.myApiUrl + id);
   }
 
-  saveInsuranceQuotes(product: InsuranceQuote): Observable<void> {
-    return this.http.post<void>(this.myAppUrl + this.myApiUrl, product);
+  saveInsuranceQuotes(product: InsuranceQuote): Observable<InsuranceQuote> {
+    return this.http.post<InsuranceQuote>(this.myAppUrl + this.myApiUrl, product);
   }
 
   editInsuranceQuotes(id: number, product: InsuranceQuote): Observable<void> {

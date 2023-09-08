@@ -1,31 +1,73 @@
 .text-header{
     min-height: 100vh ;
-    color: #f4f4f4;
-    font-family: 'Montserrat';
+    color: #fFfFfF;
+    font-family: 'VAGRoundedStd-Thin';
 }
 
 .text-header h1{
-    font-family: 'Anton';
+    font-family: 'TrebuchetMS';
 }
 
-.text-header span{
-    letter-spacing: 5px;
+.global{
     font-size: 1.4em;
-    font-family: 'Montserrat';
+    font-family: 'VAGRoundedStd-Bold';
     margin: 0 0 0 5px;
+}
+.universidad{
+    font-size: 1.4em;
+    font-family: 'VAGRoundedStd-Thin';
 }
 
 .text-header p{
     font-size: 1.3em;
+    font-family: 'TrebuchetMS';
 }
 
 .btn-yo{
     padding: 7px 12px;
     color: #f4f4f4;
-    background-color:#0e5ea880 ;
+    width: 60%;
+    border-radius:1.0rem;
+    border: none;
+    background:  #4274a3;
+    background: -webkit-linear-gradient(to right , #356da1, #00328C);
+    background: linear-gradient(to right , #356da1, #00328C);
+    
 }
 
 .btn-yo:hover{
     color: #f4f4f4;
-    background-color: #a8a50e80;
 }
+
+
+
+
+.header{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(./../../../assets/images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover ;
+    background-attachment: fixed;
+    overflow-y: visible;
+    }
+    
+    .header:before{
+    content: '';
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(rgba(255,255,255,.1), rgba(34,40,49,1));
+    }
+
+    .bg-dark{
+        position: relative;
+        z-index: 20;
+        width: 100%;    
+        background-color: transparent!important;
+        
+        }
+    

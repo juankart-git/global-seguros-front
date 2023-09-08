@@ -13,7 +13,7 @@ export class ProductRateService {
 
   constructor(private http: HttpClient) { 
     this.myAppUrl = 'http://localhost:3000/';
-    this.myApiUrl = 'api/products-rates/';
+    this.myApiUrl = 'api/product-rates/';
   }
 
   getListProductRates(): Observable<ProductRate[]> {
@@ -22,6 +22,10 @@ export class ProductRateService {
 
   getProductRate(id: number): Observable<ProductRate> {
     return this.http.get<ProductRate>(this.myAppUrl + this.myApiUrl + id);
+  }
+
+  getProductRateByYear(year: number): Observable<ProductRate> {
+    return this.http.get<ProductRate>(this.myAppUrl + this.myApiUrl + 'year/' + year);
   }
 
   deleteProductRate(id: number): Observable<void> {
